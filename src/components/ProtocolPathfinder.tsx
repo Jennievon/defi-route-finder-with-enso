@@ -6,6 +6,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { ArrowUpDown, HelpCircle } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Loader } from "@/components/ui/loader";
 import {
   Tooltip,
   TooltipContent,
@@ -105,7 +106,11 @@ export default function ProtocolPathfinder() {
   if (isInitializing) {
     return (
       <div className="flex justify-center items-center min-h-screen bg-background">
-        Loading...
+        <Loader
+          size="lg"
+          text="Initializing DeFi Route Finder..."
+          className="text-center"
+        />
       </div>
     );
   }
