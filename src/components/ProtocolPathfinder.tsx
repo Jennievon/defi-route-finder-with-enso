@@ -19,7 +19,6 @@ import {
   useTokens,
   useNetworks,
   useProtocols,
-  useApproval,
   useRoute,
   useQuote,
 } from "@/hooks/useEnso";
@@ -72,18 +71,6 @@ export default function ProtocolPathfinder() {
     priceImpact: true,
     enabled:
       shouldFindRoute && !!address && !!fromToken && !!toToken && !!amount,
-  });
-
-  const { data: approval } = useApproval({
-    chainId,
-    tokenAddress: fromToken?.address,
-    amount: amount
-      ? parseUnits(amount, fromToken?.decimals || 18).toString()
-      : undefined,
-    enabled:
-      !!fromToken &&
-      !!amount &&
-      fromToken.address !== "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
   });
 
   const handleSwapTokens = () => {
@@ -210,43 +197,6 @@ export default function ProtocolPathfinder() {
                 />
               </div>
             </div>
-
-            {approval && (
-              <Alert>
-                <AlertDescription className="flex items-center justify-between">
-                  <span>Token approval required</span>
-                  <div className="text-right">
-                    <div className="font-medium">
-                      {
-                        formatGas(approval.gas, chainId, gasPrice, tokenPrice)
-                          .units
-                      }
-                    </div>
-                    <div className="text-sm text-muted-foreground">
-                      {
-                        formatGas(approval.gas, chainId, gasPrice, tokenPrice)
-                          .nativeCost
-                      }
-                      {formatGas(approval.gas, chainId, gasPrice, tokenPrice)
-                        .usdCost !== "N/A" && (
-                        <span className="ml-1">
-                          (
-                          {
-                            formatGas(
-                              approval.gas,
-                              chainId,
-                              gasPrice,
-                              tokenPrice
-                            ).usdCost
-                          }
-                          )
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </AlertDescription>
-              </Alert>
-            )}
 
             <Button
               className="w-full"
