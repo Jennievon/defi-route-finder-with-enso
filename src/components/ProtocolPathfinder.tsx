@@ -309,10 +309,7 @@ export default function ProtocolPathfinder() {
                       <div className="flex items-center gap-2">
                         <span className="font-medium">Expected Output:</span>
                         <span>
-                          {formatAmount(
-                            route.amountOut[toToken?.address || ""],
-                            toToken?.decimals
-                          )}{" "}
+                          {formatAmount(route.amountOut, toToken?.decimals)}{" "}
                           {toToken?.symbol}
                         </span>
                       </div>

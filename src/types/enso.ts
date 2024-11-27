@@ -64,7 +64,7 @@ export interface Transaction {
 
 export interface RouteResponse {
   gas: string;
-  amountOut: Record<string, string>;
+  amountOut: string;
   priceImpact?: number;
   feeAmount?: string[];
   createdAt: number;

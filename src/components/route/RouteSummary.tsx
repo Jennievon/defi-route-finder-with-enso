@@ -33,7 +33,7 @@ export function RouteSummary({
   const { gasPrice, tokenPrice } = useGasPrices(chainId);
   const gasEstimate = formatGas(route.gas, chainId, gasPrice, tokenPrice);
 
-  const amount = Object.values(route.amountOut)[0] || "0";
+  const amount = formatAmount(route.amountOut, decimals);
 
   return (
     <TooltipProvider>
@@ -71,7 +71,7 @@ export function RouteSummary({
                 </Tooltip>
               </div>
               <span className="text-sm font-bold ml-2">
-                {formatAmount(amount, decimals)} {tokenSymbol}
+                {amount} {tokenSymbol}
               </span>
             </div>
 
