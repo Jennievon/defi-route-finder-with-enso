@@ -80,6 +80,8 @@ describe("RouteSummary", () => {
       <RouteSummary route={mockRoute} chainId={1} />
     );
 
+    expect(container.querySelector(".text-green-500")).toBeInTheDocument();
+
     //check if gas estimate is rendered
     expect(
       screen.getByText((content) => content.includes("100.0K gas"))
