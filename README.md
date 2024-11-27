@@ -2,7 +2,7 @@
 
 A powerful DeFi aggregation tool that finds the most efficient routes across multiple protocols to maximize returns on token swaps. Built with React, Vite, and the Enso Finance API.
 
-![DeFi Route Finder](https://github.com/jennievon/defi-route-finder/raw/main/screenshot.png)
+![DeFi Route Finder](<img width="1728" alt="Screenshot 2024-11-27 at 9 58 13 pm" src="https://github.com/user-attachments/assets/d76b425f-9b91-46cd-8565-06d472135a5c">
 
 ## Features
 
@@ -20,7 +20,7 @@ A powerful DeFi aggregation tool that finds the most efficient routes across mul
 - **Styling**: Tailwind CSS + shadcn/ui
 - **State Management**: TanStack Query
 - **Wallet Integration**: RainbowKit + wagmi
-- **API Integration**: Enso Finance API
+- **API Integration**: [Enso Finance API](https://api.enso.finance/api#/), [Enso Documentation](https://api-docs.enso.finance/router-api)
 - **Type Safety**: TypeScript
 
 ## Getting Started
@@ -36,7 +36,8 @@ src/
 ├── lib/                 # Utility functions
 ├── services/            # API services
 ├── types/               # TypeScript types
-└── test/                # Test utilities
+└── test/                # Test utilities<img width="1728" alt="Screenshot 2024-11-27 at 9 57 32 pm" src="https://github.com/user-attachments/assets/2466111b-6660-4123-8f62-5e6e0ff72acf">
+
 ```
 
 ### Prerequisites
@@ -60,7 +61,7 @@ npm install
 
 3. Create a `.env` file in the root directory:
 ```env
-VITE_WALLETCONNECT_PROJECT_ID=your_project_id # Get this from the WalletConnect website
+VITE_WALLETCONNECT_PROJECT_ID=your_project_id # Get this from https://cloud.reown.com/
 VITE_ENSO_API_KEY=your_api_key # Get this from the Enso Finance website
 ```
 
@@ -130,10 +131,3 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Acknowledgments
-
-- [Enso Finance](https://enso.finance) for their powerful DeFi API
-- [RainbowKit](https://www.rainbowkit.com/) for the wallet integration
-- [shadcn/ui](https://ui.shadcn.com/) for the beautiful UI components
-- [wagmi](https://wagmi.sh/) for the Ethereum hooks
