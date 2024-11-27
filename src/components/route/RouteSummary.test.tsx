@@ -50,7 +50,7 @@ vi.mock("@/components/ui/badge", () => ({
 describe("RouteSummary", () => {
   const mockRoute = {
     gas: "100000",
-    amountOut: { "0x123": "1000000000000000000" },
+    amountOut: "1000000000000000000",
     priceImpact: 1.5,
     createdAt: 995,
     route: [
