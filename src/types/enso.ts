@@ -90,17 +90,19 @@ export interface RouteRequest {
   ignoreStandards?: string[];
 }
 
-export interface WalletInfo {
-  address: string;
-  isDeployed: boolean;
+export interface NetworkConfig {
+  nativeCurrency: {
+    symbol: string;
+    decimals: number;
+    coingeckoId: string; //for price fetching
+  };
+  blockTime: number; //avg block time(in sec)
 }
 
-export interface ApprovalResponse {
-  tx: Transaction;
-  gas: string;
-  token: string;
-  amount: string;
-  spender: string;
+export interface GasEstimate {
+  units: string;
+  nativeCost: string;
+  usdCost: string;
 }
 
 export interface QuoteResponse {
@@ -120,21 +122,6 @@ export interface QuoteRequest {
   fee?: string[];
   feeReceiver?: string;
   priceImpact?: boolean;
-}
-
-export interface NetworkConfig {
-  nativeCurrency: {
-    symbol: string;
-    decimals: number;
-    coingeckoId: string; //for price fetching
-  };
-  blockTime: number; //avg block time(in sec)
-}
-
-export interface GasEstimate {
-  units: string;
-  nativeCost: string;
-  usdCost: string;
 }
 
 export const NETWORK_CONFIGS: Record<number, NetworkConfig> = {

@@ -29,7 +29,7 @@ export function RouteSummary({
   isSelected = false,
   onClick,
 }: RouteSummaryProps) {
-  const currentBlock = useCurrentBlock();
+  const currentBlock = useCurrentBlock(chainId);
   const { gasPrice, tokenPrice } = useGasPrices(chainId);
   const gasEstimate = formatGas(route.gas, chainId, gasPrice, tokenPrice);
 
@@ -85,9 +85,18 @@ export function RouteSummary({
                   </TooltipTrigger>
                   <TooltipContent className="max-w-xs">
                     <div className="space-y-1">
-                      <p>Gas Units: {gasEstimate.units}</p>
-                      <p>Cost: {gasEstimate.nativeCost}</p>
-                      <p>USD Value: {gasEstimate.usdCost}</p>
+                      <p>
+                        Gas Units:
+                        {gasEstimate.units}
+                      </p>
+                      <p>
+                        Cost:
+                        {gasEstimate.nativeCost}
+                      </p>
+                      <p>
+                        USD Value:
+                        {gasEstimate.usdCost}
+                      </p>
                     </div>
                   </TooltipContent>
                 </Tooltip>
@@ -149,7 +158,7 @@ export function RouteSummary({
               <div className="flex items-center gap-2 text-muted-foreground">
                 <Timer className="h-4 w-4 flex-shrink-0" />
                 <span className="text-xs">
-                  {formatCreatedAt(route.createdAt, currentBlock)}
+                  {formatCreatedAt(route.createdAt, chainId, currentBlock)}
                 </span>
                 <Tooltip>
                   <TooltipTrigger>

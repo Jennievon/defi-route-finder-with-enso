@@ -20,13 +20,11 @@ import {
   useNetworks,
   useProtocols,
   useRoute,
-  useQuote,
 } from "@/hooks/useEnso";
 import { RouteStep } from "./route/RouteStep";
 import { RouteSummary } from "./route/RouteSummary";
 import { formatAmount, formatGas } from "@/lib/utils";
-import type { Token, Protocol } from "@/types/enso";
-import { QuotePreview } from "./QuotePreview";
+import type { Protocol, Token } from "@/types/enso";
 import { useGasPrices } from "@/hooks/useGasPrices";
 
 export default function ProtocolPathfinder() {
@@ -38,6 +36,7 @@ export default function ProtocolPathfinder() {
   const [slippage, setSlippage] = useState<string>("0.5");
   const [shouldFindRoute, setShouldFindRoute] = useState(false);
 
+  // this is to calculate the slippage in basis points, eg. 0.5% => 50
   const slippageBasisPoints = Math.round(
     parseFloat(slippage || "0.5") * 100
   ).toString();
@@ -47,24 +46,13 @@ export default function ProtocolPathfinder() {
   const { data: protocols, isLoading: isLoadingProtocols } = useProtocols();
   const { gasPrice, tokenPrice } = useGasPrices(chainId);
 
-  const { data: quote } = useQuote({
-    chainId,
-    fromAddress: address,
-    tokenIn: fromToken?.address ? [fromToken.address] : undefined,
-    tokenOut: toToken?.address ? [toToken.address] : undefined,
-    amountIn: amount
-      ? [parseUnits(amount, fromToken?.decimals || 18).toString()]
-      : undefined,
-    enabled:
-      !!address && !!fromToken && !!toToken && !!amount && !shouldFindRoute,
-  });
-
   const { data: route, isLoading: isLoadingRoute } = useRoute({
     chainId,
     fromAddress: address || "",
     tokenIn: [fromToken?.address || ""],
     tokenOut: [toToken?.address || ""],
     amountIn: [
+      // parseUnits ensures the amount is in the correct format for the chain
       amount ? parseUnits(amount, fromToken?.decimals || 18).toString() : "0",
     ],
     slippage: slippageBasisPoints,
@@ -210,20 +198,6 @@ export default function ProtocolPathfinder() {
           </div>
         </CardContent>
       </Card>
-
-      {quote && !route && (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="space-y-4">
-            <h2 className="text-xl font-bold mb-4">Quote Preview</h2>
-            <QuotePreview
-              quote={quote}
-              chainId={chainId}
-              tokenSymbol={toToken?.symbol}
-              decimals={toToken?.decimals}
-            />
-          </div>
-        </div>
-      )}
 
       {route && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

@@ -6,10 +6,6 @@ import type {
   Protocol,
   RouteRequest,
   RouteResponse,
-  WalletInfo,
-  ApprovalResponse,
-  QuoteRequest,
-  QuoteResponse,
 } from "@/types/enso";
 
 class EnsoService {
@@ -44,34 +40,6 @@ class EnsoService {
     return data;
   }
 
-  async getWallet(params: {
-    chainId: number;
-    fromAddress: string;
-  }): Promise<WalletInfo> {
-    const { data } = await this.axiosInstance.get<WalletInfo>("/wallet", {
-      params,
-    });
-    return data;
-  }
-
-  async getApproval(params: {
-    chainId: number;
-    fromAddress: string;
-    tokenAddress: string;
-    amount: string;
-  }): Promise<ApprovalResponse> {
-    const { data } = await this.axiosInstance.get<ApprovalResponse>(
-      "/wallet/approve",
-      {
-        params: {
-          ...params,
-          routingStrategy: "router",
-        },
-      }
-    );
-    return data;
-  }
-
   async getRoute(params: RouteRequest): Promise<RouteResponse> {
     const { data } = await this.axiosInstance.get<RouteResponse>(
       "/shortcuts/route",
@@ -79,27 +47,6 @@ class EnsoService {
         params: {
           ...params,
           routingStrategy: "router",
-          amountIn: Array.isArray(params.amountIn)
-            ? params.amountIn
-            : [params.amountIn],
-          tokenIn: Array.isArray(params.tokenIn)
-            ? params.tokenIn
-            : [params.tokenIn],
-          tokenOut: Array.isArray(params.tokenOut)
-            ? params.tokenOut
-            : [params.tokenOut],
-        },
-      }
-    );
-    return data;
-  }
-
-  async getQuote(params: QuoteRequest): Promise<QuoteResponse> {
-    const { data } = await this.axiosInstance.get<QuoteResponse>(
-      "/shortcuts/quote",
-      {
-        params: {
-          ...params,
           amountIn: Array.isArray(params.amountIn)
             ? params.amountIn
             : [params.amountIn],

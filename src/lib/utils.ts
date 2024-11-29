@@ -23,16 +23,15 @@ export function formatAmount(
   return parseFloat(formatted).toFixed(6);
 }
 
-const AVERAGE_BLOCK_TIME = 12; //the avg block time on Ethereum Mainnet is 12 seconds
-
 export function formatCreatedAt(
   blockNumber: number,
+  chainId: number,
   currentBlock?: bigint
 ): string {
   if (!blockNumber || !currentBlock) return "";
 
   const blockDifference = Number(currentBlock) - blockNumber;
-  const secondsAgo = blockDifference * AVERAGE_BLOCK_TIME;
+  const secondsAgo = blockDifference * NETWORK_CONFIGS[chainId].blockTime;
 
   if (secondsAgo < 60) {
     return "just now";

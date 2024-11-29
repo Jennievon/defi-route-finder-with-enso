@@ -43,18 +43,24 @@ describe("formatAmount", () => {
 describe("formatCreatedAt", () => {
   it("should format just now", () => {
     const currentBlock = BigInt(1000);
+    const chainId = 1; // Ethereum Mainnet
     const blockNumber = 999;
-    expect(formatCreatedAt(blockNumber, currentBlock)).toBe("just now");
+    expect(formatCreatedAt(blockNumber, chainId, currentBlock)).toBe(
+      "just now"
+    );
   });
 
   it("should format minutes ago", () => {
     const currentBlock = BigInt(1000);
+    const chainId = 1; // Ethereum Mainnet
     const blockNumber = 995; // 5 blocks = ~60 seconds
-    expect(formatCreatedAt(blockNumber, currentBlock)).toBe("1 minute ago");
+    expect(formatCreatedAt(blockNumber, chainId, currentBlock)).toBe(
+      "1 minute ago"
+    );
   });
 
   it("should handle missing blocks", () => {
-    expect(formatCreatedAt(0)).toBe("");
+    expect(formatCreatedAt(0, 1, BigInt(0))).toBe("");
   });
 });
 

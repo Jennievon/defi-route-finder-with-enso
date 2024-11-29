@@ -6,9 +6,7 @@ import type {
   Protocol,
   RouteRequest,
   RouteResponse,
-  QuoteResponse,
 } from "@/types/enso";
-import { useAccount } from "wagmi";
 
 export function useNetworks() {
   return useQuery<Network[], Error>({
@@ -37,66 +35,5 @@ export function useRoute(params: RouteRequest & { enabled?: boolean }) {
     queryKey: ["route", routeParams],
     queryFn: () => ensoService.getRoute(routeParams),
     enabled,
-  });
-}
-
-export function useApproval({
-  chainId = 1,
-  tokenAddress,
-  amount,
-  enabled = true,
-}: {
-  chainId?: number;
-  tokenAddress?: string;
-  amount?: string;
-  enabled?: boolean;
-}) {
-  const { address } = useAccount();
-
-  return useQuery({
-    queryKey: ["approval", chainId, address, tokenAddress, amount],
-    queryFn: () =>
-      ensoService.getApproval({
-        chainId,
-        fromAddress: address!,
-        tokenAddress: tokenAddress!,
-        amount: amount!,
-      }),
-    enabled: enabled && !!address && !!tokenAddress && !!amount,
-  });
-}
-
-export function useQuote({
-  chainId = 1,
-  fromAddress,
-  tokenIn,
-  tokenOut,
-  amountIn,
-  enabled = true,
-}: {
-  chainId?: number;
-  fromAddress?: string;
-  tokenIn?: string[];
-  tokenOut?: string[];
-  amountIn?: string[];
-  enabled?: boolean;
-}) {
-  return useQuery<QuoteResponse>({
-    queryKey: ["quote", chainId, fromAddress, tokenIn, tokenOut, amountIn],
-    queryFn: () =>
-      ensoService.getQuote({
-        chainId,
-        fromAddress: fromAddress!,
-        tokenIn: tokenIn!,
-        tokenOut: tokenOut!,
-        amountIn: amountIn!,
-        priceImpact: true,
-      }),
-    enabled:
-      enabled &&
-      !!fromAddress &&
-      !!tokenIn?.length &&
-      !!tokenOut?.length &&
-      !!amountIn?.length,
   });
 }

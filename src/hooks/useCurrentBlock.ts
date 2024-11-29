@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { usePublicClient } from "wagmi";
 import { useQuery } from "@tanstack/react-query";
+import { NETWORK_CONFIGS } from "@/types/enso";
 
-export function useCurrentBlock() {
+export function useCurrentBlock(chainId: number) {
   const publicClient = usePublicClient();
 
   const { data: blockNumber, refetch } = useQuery({
@@ -10,11 +11,11 @@ export function useCurrentBlock() {
     queryFn: () => publicClient?.getBlockNumber(),
   });
 
-  //polling every 12 seconds - the average block time on Ethereum
+  //poll based on the blockTime
   useEffect(() => {
     const interval = setInterval(() => {
       refetch();
-    }, 12000);
+    }, NETWORK_CONFIGS[chainId].blockTime * 1000);
 
     return () => clearInterval(interval);
   }, [refetch]);
